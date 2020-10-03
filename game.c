@@ -12,9 +12,9 @@ typedef struct {
 } board;
 
 typedef struct {
-    int sum_dices;
-    int diff_fail;
-} dice;
+    int sum_points;
+    int diff_point;
+} grade;
 
 
 void checkGrade(board person){
@@ -22,7 +22,7 @@ void checkGrade(board person){
     printf("\n\n");
 }
 
-int shouldPromotion(dice addDice, board player){
+int shouldPromotion(grade add_point, board player){
     srand((unsigned)time(NULL));
     int cnt=0;
 
@@ -35,14 +35,14 @@ int shouldPromotion(dice addDice, board player){
         if(a + b == c)cnt++;
     }
 
-    addDice.sum_dices = cnt * 10;
+    add_point.sum_points = cnt * 10;
 
-    if(addDice.sum_dices >= 60){
-        printf("Your test score was %d. Difference is %d points.\nCongratulations. You've been promoted.\n", addDice.sum_dices, addDice.diff_fail);
+    if(add_point.sum_points >= 60){
+        printf("Your test score was %d. Difference is %d points.\nCongratulations. You've been promoted.\n", add_point.sum_points, add_point.diff_point);
         printf("\n\n");
         return TRUE;
     }
-    printf("Your test score was %d. Difference is %d points.\nOops. You repeated a school year...   Cheer up! Work harder next time.\n", addDice.sum_dices, addDice.diff_fail);
+    printf("Your test score was %d. Difference is %d points.\nOops. You repeated a school year...   Cheer up! Work harder next time.\n", add_point.sum_points, add_point.diff_point);
     printf("\n\n");
 
     return FALSE;
@@ -65,10 +65,10 @@ void message(){
 
 int main(){
     board player = {1, 0, 1};
-    dice first = {};
+    grade first = {};
     checkGrade(player);
 
-    while(player.school_grade != 6){
+    while(player.school_grade < 5){
         int isFlag = shouldPromotion(first, player);
         updateGrade(&player, isFlag);
         checkGrade(player);
