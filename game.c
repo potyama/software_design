@@ -36,6 +36,7 @@ int shouldPromotion(grade add_point, board player){
     }
 
     add_point.sum_points = cnt * 10;
+    add_point.diff_point = add_point.sum_points - 40;
 
     if(add_point.sum_points >= 60){
         printf("Your test score was %d. Difference is %d points.\nCongratulations. You've been promoted.\n", add_point.sum_points, add_point.diff_point);
