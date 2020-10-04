@@ -25,14 +25,57 @@ void checkGrade(board person){
 int shouldPromotion(grade add_point, board player){
     srand((unsigned)time(NULL));
     int cnt=0;
+    int a,b,ans;
 
     for(int i = 0;i < 10; i++){
-        int a = ((rand()% 10 * player.school_grade) + 1);
-        int b = ((rand()% 10 * player.school_grade) + 1);
-        int c;
-        printf("%d + %d = ?\n", a, b);
-        scanf("%d", &c);
-        if(a + b == c)cnt++;
+        switch (rand()%3){
+            case 0:{
+                a = ((rand() % 10 * player.school_grade) + 1);
+                b = ((rand() % 10 * player.school_grade) + 1);
+
+                printf("%d + %d = ?\n", a, b);
+                scanf("%d", &ans);
+                if(a + b == ans)cnt++;
+
+                break;
+                }
+            case 1:{
+                a = ((rand() % 10 * player.school_grade) + 1);
+                b = ((rand() % 10 * player.school_grade) + 1);
+
+                printf("%d - %d = ?\n", a, b);
+                scanf("%d", &ans);
+
+                if(a - b == ans)cnt++;
+
+                break;
+                }
+            //case 2:
+            default: {
+                a = ((rand() % 10) + 1);
+                b = ((rand() % 10) + 1);
+
+                printf("%d * %d = ?\n", a, b);
+                scanf("%d", &ans);
+
+                if(a * b == ans)cnt++;
+
+                break;
+                }
+/*
+            case 3:
+            do{
+                a = ((rand() % 10) * player.school_grade + 1);
+                b = ((rand() % 10) * player.school_grade + 2);
+                printf("a=%d,b=%d\n",a,b);
+            }while(a%b != 0);
+
+                printf("%d / %d = ?\n", a, b);
+                scanf("%d", &ans);
+                if(a / b == ans)cnt++;
+
+            break;*/
+        }
     }
 
     add_point.sum_points = cnt * 10;
