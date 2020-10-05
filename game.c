@@ -23,7 +23,7 @@ void checkGrade(board person){
 }
 
 int shouldPromotion(grade add_point, board player){
-    srand((unsigned)time(NULL));
+    rand((unsigned)time(NULL));
     int cnt=0;
     int a,b,loop_i,ans;
 
