@@ -25,5 +25,25 @@ typedef struct {
 ```
 学校関連
 
+# 関数
+```C
+void checkGrade(board person){ }
+```
+学年チェック
 
+```C
+int shouldPromotion(point add_point, board player){ }
+```
+問題生成
 
+```C
+void updateGrade(board *main_character, int isFlag){ }
+```
+学年更新
+
+```C
+void message(){ }
+```
+終わりのメッセージを表示
+
+詳しくはまた今度書く。
