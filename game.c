@@ -14,7 +14,7 @@ typedef struct {
 typedef struct {
     int sum_points;
     int diff_point;
-} grade;
+} point;
 
 
 void checkGrade(board person){
@@ -22,13 +22,14 @@ void checkGrade(board person){
     printf("\n\n");
 }
 
-int shouldPromotion(grade add_point, board player){
+int shouldPromotion(point add_point, board player){
     srand((unsigned)time(NULL));
     int cnt=0;
-    int a,b,ans;
+    int a,b,loop_i,ans;
 
     for(int i = 0;i < 10; i++){
-        switch (rand()%3){
+        loop_i = 0;
+        switch (rand()%4){
             case 0:{
                 a = ((rand() % 10 * player.school_grade) + 1);
                 b = ((rand() % 10 * player.school_grade) + 1);
@@ -50,8 +51,7 @@ int shouldPromotion(grade add_point, board player){
 
                 break;
                 }
-            //case 2:
-            default: {
+            case 2: {
                 a = ((rand() % 10) + 1);
                 b = ((rand() % 10) + 1);
 
@@ -62,19 +62,20 @@ int shouldPromotion(grade add_point, board player){
 
                 break;
                 }
-/*
+
             case 3:
             do{
                 a = ((rand() % 10) * player.school_grade + 1);
                 b = ((rand() % 10) * player.school_grade + 2);
-                printf("a=%d,b=%d\n",a,b);
-            }while(a%b != 0);
+                //printf("a=%d,b=%d, i=%d\n",a,b,i);
+                loop_i++;
+            }while(a%b != 0 && loop_i <= 10);
 
                 printf("%d / %d = ?\n", a, b);
                 scanf("%d", &ans);
                 if(a / b == ans)cnt++;
 
-            break;*/
+            break;
         }
     }
 
@@ -109,7 +110,7 @@ void message(){
 
 int main(){
     board player = {1, 0, 1};
-    grade first = {};
+    point first = {};
     checkGrade(player);
 
     while(player.school_grade < 5){
