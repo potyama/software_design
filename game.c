@@ -14,7 +14,7 @@ typedef struct {
 typedef struct {
     int sum_points;
     int diff_point;
-} grade;
+} point;
 
 
 void checkGrade(board person){
@@ -24,7 +24,7 @@ void checkGrade(board person){
     printf("\n\n");
 }
 
-int shouldPromotion(grade add_point, board player){
+int shouldPromotion(point add_point, board player){
     srand((unsigned)time(NULL));
     int cnt=0;
     int a,b,loop_i,ans;
@@ -113,7 +113,7 @@ void message(){
 
 int main(){
     board player = {1, 0, 1};
-    grade first = {};
+    point first = {};
     checkGrade(player);
 
     while(player.school_grade < 5){
