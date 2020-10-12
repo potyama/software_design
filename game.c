@@ -18,7 +18,9 @@ typedef struct {
 
 
 void checkGrade(board person){
-    printf("Your grade is %d,\nThe number of years of retention is %d,\nYour turn is %d.\n", person.school_grade, person.count_repeat_year, person.turn);
+    printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+    printf("You're currently a %d year student.\nYou repeated your grade %d time(s). This is your %d time(s).\n", person.school_grade, person.count_repeat_year, person.turn);
+    printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
     printf("\n\n");
 }
 
@@ -67,7 +69,6 @@ int shouldPromotion(point add_point, board player){
             do{
                 a = ((rand() % 10) * player.school_grade + 1);
                 b = ((rand() % 10) * player.school_grade + 2);
-                //printf("a=%d,b=%d, i=%d\n",a,b,i);
                 loop_i++;
             }while(a%b != 0 && loop_i <= 10);
 
@@ -82,12 +83,14 @@ int shouldPromotion(point add_point, board player){
     add_point.sum_points = cnt * 10;
     add_point.diff_point = add_point.sum_points - 40;
 
+    printf("Your marks is %d.\nYou are %d away from failing.\n\n", add_point.sum_points, add_point.diff_point);
+
     if(add_point.sum_points >= 60){
-        printf("Your test score was %d. Difference is %d points.\nCongratulations. You've been promoted.\n", add_point.sum_points, add_point.diff_point);
+        printf("Congrats! You went up a grade!\n Let's keep at it for the next one too!");
         printf("\n\n");
         return TRUE;
     }
-    printf("Your test score was %d. Difference is %d points.\nOops. You repeated a school year...   Cheer up! Work harder next time.\n", add_point.sum_points, add_point.diff_point);
+    printf("Oh my... Looks like you gonna have to repeat the year.\nDon't worry!\nLet's get better for the next one!", add_point.sum_points, add_point.diff_point);
     printf("\n\n");
 
     return FALSE;
