@@ -65,18 +65,16 @@ int shouldPromotion(point add_point, board player){
                 break;
                 }
 
-            case 3:
-            do{
-                a = ((rand() % 10) * player.school_grade + 1);
-                b = ((rand() % 10) * player.school_grade + 2);
-                loop_i++;
-            }while(a%b != 0 && loop_i <= 10);
-
-                printf("%d / %d = ?\n", a, b);
+            case 3:{
+                a = ((rand() % 10) + 1);
+                b = ((rand() % 10) + 1);
+		int c = a * b;
+                printf("%d / %d = ?\n", c, a);
                 scanf("%d", &ans);
-                if(a / b == ans)cnt++;
+                if(b == ans)cnt++;
 
-            break;
+		break;
+	        }
         }
     }
 
