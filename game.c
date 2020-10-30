@@ -8,7 +8,7 @@
 typedef struct {
     int school_grade;
     int count_repeat_year;
-    int turn;
+    int my_turn;
 } board;
 
 typedef struct {
@@ -19,15 +19,16 @@ typedef struct {
 
 void checkGrade(board person){
     printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
-    printf("You're currently a %d year student.\nYou repeated your grade %d time(s). This is your %d time(s).\n", person.school_grade, person.count_repeat_year, person.turn);
+    printf("You're currently a %d year student.\nYou repeated your grade %d time(s). This is your %d time(s).\n", person.school_grade, person.count_repeat_year, person.my_turn);
     printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
     printf("\n\n");
 }
 
-int shouldPromotion(point add_point, board player){
+int tryExam(point add_point, board player){
     srand((unsigned)time(NULL));
     int cnt=0;
     int a,b,loop_i,ans;
+    printf("Let's try!\n\n");
 
     for(int i = 0;i < 10; i++){
         loop_i = 0;
@@ -68,12 +69,11 @@ int shouldPromotion(point add_point, board player){
             case 3:{
                 a = ((rand() % 10) + 1);
                 b = ((rand() % 10) + 1);
-		int c = a * b;
+		        int c = a * b;
+
                 printf("%d / %d = ?\n", c, a);
                 scanf("%d", &ans);
                 if(b == ans)cnt++;
-
-		break;
 	        }
         }
     }
@@ -97,14 +97,14 @@ int shouldPromotion(point add_point, board player){
 void updateGrade(board *main_character, int isFlag){
     if(isFlag){
         main_character->school_grade++;
-        main_character->turn++;
+        main_character->my_turn++;
     }else{
         main_character->count_repeat_year++;
-        main_character->turn++;
+        main_character->my_turn++;
     }
 }
 
-void message(){
+void finishMessage(){
     printf("Good Bye:)\n");
 }
 
@@ -115,9 +115,9 @@ int main(){
     checkGrade(player);
 
     while(player.school_grade < 5){
-        int isFlag = shouldPromotion(first, player);
+        int isFlag = tryExam(first, player);
         updateGrade(&player, isFlag);
         checkGrade(player);
     }
-    message();
+    finishMessage();
 }
