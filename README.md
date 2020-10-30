@@ -74,6 +74,6 @@ void message(){ }
 
 # その他
 ## 命名規則
-(C言語における命名規則のポイントと実例
-)[http://www.c-lang.org/detail/naming_conventions.html]と(C Coding Standard
-)[https://users.ece.cmu.edu/~eno/coding/CCodingStandard.html]に従った。
+[C言語における命名規則のポイントと実例
+](http://www.c-lang.org/detail/naming_conventions.html)と[C Coding Standard
+](https://users.ece.cmu.edu/~eno/coding/CCodingStandard.html)に従った。
