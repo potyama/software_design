@@ -3,11 +3,24 @@
 # 概要
 あなたは高専に入学しました。留年せずに頑張ろう！
 
-# ルール
+# 要求仕様
+## ゲームシステム
+### ルール
 - 毎回、四則演算の問題が10問出題される。
   - 6問以上正解なら、学年が上がり、6問未満なら学年が留まる(留年)
 
-# 構造体
+## ゲーム内要素
+### プレイヤー
+
+## インタフェース
+
+# テスト計画
+## 単体テスト
+## 結合テスト
+## 全体テスト
+
+# 設計書
+## データ構造
 ```c=
 typedef struct {
     int sum_points; //獲得点数
@@ -27,7 +40,7 @@ typedef struct {
 
 ゲーム進行において必要な情報が入ってる構造体
 
-# 関数
+## 関数使用
 ```c=
 void checkGrade(board person){ }
 ```
@@ -54,3 +67,14 @@ void message(){ }
 
 終わりのメッセージを表示する。
 
+# テスト
+## 単体テスト
+## 結合テスト
+## 全体テスト
+
+# その他
+## 命名規則
+[C言語における命名規則のポイントと実例
+](http://www.c-lang.org/detail/naming_conventions.html)と[C Coding Standard
+](https://users.ece.cmu.edu/~eno/coding/CCodingStandard.html)、[Recommended C Style and Coding Standards
+](https://www.doc.ic.ac.uk/lab/cplus/cstyle.html)を参考にした

@@ -6,35 +6,35 @@
 #define FALSE 0
 
 typedef struct {
-    int school_grade;
-    int count_repeat_year;
-    int turn;
-} board;
+    int schoolGrade;
+    int countRepeatYear;
+    int myTurn;
+} t_PlayerStatus;
 
 typedef struct {
-    int sum_points;
-    int diff_point;
-} point;
+    int sumScores;
+    int diffScore;
+} t_PlayerScore;
 
 
-void checkGrade(board person){
+void checkStatus(t_PlayerStatus player){
     printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
-    printf("You're currently a %d year student.\nYou repeated your grade %d time(s). This is your %d time(s).\n", person.school_grade, person.count_repeat_year, person.turn);
+    printf("You're currently a %d year student.\nYou repeated your grade %d time(s). This is your %d time(s).\n", player.schoolGrade, player.countRepeatYear, player.myTurn);
     printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
     printf("\n\n");
 }
 
-int shouldPromotion(point add_point, board player){
+int tryExam(t_PlayerScore scores, t_PlayerStatus player){
     srand((unsigned)time(NULL));
     int cnt=0;
-    int a,b,loop_i,ans;
+    int a,b,ans;
+    printf("Let's try!\n\n");
 
     for(int i = 0;i < 10; i++){
-        loop_i = 0;
         switch (rand()%4){
             case 0:{
-                a = ((rand() % 10 * player.school_grade) + 1);
-                b = ((rand() % 10 * player.school_grade) + 1);
+                a = ((rand() % 10 * player.schoolGrade) + 1);
+                b = ((rand() % 10 * player.schoolGrade) + 1);
 
                 printf("%d + %d = ?\n", a, b);
                 scanf("%d", &ans);
@@ -43,8 +43,8 @@ int shouldPromotion(point add_point, board player){
                 break;
                 }
             case 1:{
-                a = ((rand() % 10 * player.school_grade) + 1);
-                b = ((rand() % 10 * player.school_grade) + 1);
+                a = ((rand() % 10 * player.schoolGrade) + 1);
+                b = ((rand() % 10 * player.schoolGrade) + 1);
 
                 printf("%d - %d = ?\n", a, b);
                 scanf("%d", &ans);
@@ -68,56 +68,55 @@ int shouldPromotion(point add_point, board player){
             case 3:{
                 a = ((rand() % 10) + 1);
                 b = ((rand() % 10) + 1);
-		int c = a * b;
+		        int c = a * b;
+
                 printf("%d / %d = ?\n", c, a);
                 scanf("%d", &ans);
                 if(b == ans)cnt++;
-
-		break;
 	        }
         }
     }
 
-    add_point.sum_points = cnt * 10;
-    add_point.diff_point = add_point.sum_points - 40;
+    scores.sumScores = cnt * 10;
+    scores.diffScore = scores.sumScores - 40;
 
-    printf("Your marks is %d.\nYou are %d away from failing.\n\n", add_point.sum_points, add_point.diff_point);
+    printf("Your marks is %d.\nYou are %d away from failing.\n\n", scores.sumScores, scores.diffScore);
 
-    if(add_point.sum_points >= 60){
+    if(scores.sumScores >= 60){
         printf("Congrats! You went up a grade!\n Let's keep at it for the next one too!");
         printf("\n\n");
         return TRUE;
     }
-    printf("Oh my... Looks like you gonna have to repeat the year.\nDon't worry!\nLet's get better for the next one!", add_point.sum_points, add_point.diff_point);
+    printf("Oh my... Looks like you gonna have to repeat the year.\nDon't worry!\nLet's get better for the next one!");
     printf("\n\n");
 
     return FALSE;
 }
 
-void updateGrade(board *main_character, int isFlag){
+void updateStatus(t_PlayerStatus *player, int isFlag){
     if(isFlag){
-        main_character->school_grade++;
-        main_character->turn++;
+        player->schoolGrade++;
+        player->myTurn++;
     }else{
-        main_character->count_repeat_year++;
-        main_character->turn++;
+        player->countRepeatYear++;
+        player->myTurn++;
     }
 }
 
-void message(){
+void finishMessage(){
     printf("Good Bye:)\n");
 }
 
 
 int main(){
-    board player = {1, 0, 1};
-    point first = {};
-    checkGrade(player);
+    t_PlayerStatus player = {1, 0, 1};
+    t_PlayerScore first = {};
+    checkStatus(player);
 
-    while(player.school_grade < 5){
-        int isFlag = shouldPromotion(first, player);
-        updateGrade(&player, isFlag);
-        checkGrade(player);
+    while(player.schoolGrade < 5){
+        int isFlag = tryExam(first, player);
+        updateStatus(&player, isFlag);
+        checkStatus(player);
     }
-    message();
+    finishMessage();
 }
