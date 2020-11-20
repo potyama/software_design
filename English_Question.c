@@ -76,9 +76,9 @@ int   play(char *word) {
   }
   printf("\n");
   if (guessed){
-      printf("o! %s\n",word);
+      printf("Correct! nice :) %s\n",word);
   }else{
-      printf("x! The correct answer is '%s'\n",word);
+      printf("What a pity... :( The correct answer is '%s'\n",word);
   }
   return (guessed);
 }
