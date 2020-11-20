@@ -23,46 +23,46 @@
 ## データ構造
 ```c=
 typedef struct {
-    int sum_points; //獲得点数
-    int diff_point; //赤点との差分
-} point;
+    int sumScores;//点数
+    int diffScore;//赤点との差分
+} t_PlayerScore;
 ```
 
 点数関係の構造体
 
 ```c=
 typedef struct {
-    int school_grade;　//学年
-    int count_repeat_year; //留年回数
-    int turn; // ターン
-} board;
+    int schoolGrade; //学年
+    int countRepeatYear;//留年回数
+    int myTurn; //ターン
+} t_PlayerStatus;
 ```
 
 ゲーム進行において必要な情報が入ってる構造体
 
 ## 関数使用
 ```c=
-void checkGrade(board person){ }
+void checkStatus(t_PlayerStatus player){ }
 ```
 
 学年チェックを行う。
 ここで、学年、留年回数、ターン回数を見ることができる。
 
 ```c=
-int shouldPromotion(point add_point, board player){ }
+int tryExam(t_PlayerScore scores, t_PlayerStatus player){ }
 ```
 
 問題生成を行い、解答してもらう。
 今のところ、四則演算のみ。
 ```c=
-void updateGrade(board *main_character, int isFlag){ }
+void updateStatus(t_PlayerStatus *player, int isFlag){ }
 ```
 
 学年、ターン更新を行う。
 留年回数も必要に応じて行う。
 
 ```c=
-void message(){ }
+void finishMessage(){ }
 ```
 
 終わりのメッセージを表示する。

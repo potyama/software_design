@@ -73,7 +73,7 @@ int tryExam(t_PlayerScore scores, t_PlayerStatus player){
                 printf("%d / %d = ?\n", c, a);
                 scanf("%d", &ans);
                 if(b == ans)cnt++;
-	        }
+                }
         }
     }
 
