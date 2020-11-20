@@ -24,42 +24,6 @@ void checkStatus(t_PlayerStatus player){
     printf("\n\n");
 }
 
-int tryExam(t_PlayerScore scores, t_PlayerStatus player){
-    srand((unsigned)time(NULL));
-    int total=0;
-    int a,b,ans;
-    printf("Let's try!\n\n");
-
-    	switch(player.schoolGrade){
-    		case 1:{
-    			int numOne = levelOne(player);
-    			total = numOne;
-				break;
-			}
-			case 2:{
-				int numOne = levelOne(player);
-				int numTwo = levelTwo(player);
-				total = numOne + numTwo;
-				break;
-			}
-		}
-
-    scores.sumScores = total * 10;
-    scores.diffScore = scores.sumScores - 40;
-
-    printf("Your marks is %d.\nYou are %d away from failing.\n\n", scores.sumScores, scores.diffScore);
-
-    if(scores.sumScores >= 60){
-        printf("Congrats! You went up a grade!\n Let's keep at it for the next one too!");
-        printf("\n\n");
-        return TRUE;
-    }
-    printf("Oh my... Looks like you gonna have to repeat the year.\nDon't worry!\nLet's get better for the next one!");
-    printf("\n\n");
-
-    return FALSE;
-}
-
 int levelOne(t_PlayerStatus player){
 	srand((unsigned)time(NULL));
     int cnt=0;
@@ -153,6 +117,44 @@ int levelTwo(t_PlayerStatus player){
     printf("level two count is %d\n", cnt);
     return cnt;
 }
+
+int tryExam(t_PlayerScore scores, t_PlayerStatus player){
+    srand((unsigned)time(NULL));
+    int total=0;
+    int a,b,ans;
+    printf("Let's try!\n\n");
+
+    	switch(player.schoolGrade){
+    		case 1:{
+    			int numOne = levelOne(player);
+    			total = numOne;
+				break;
+			}
+			case 2:{
+				int numOne = levelOne(player);
+				int numTwo = levelTwo(player);
+				total = numOne + numTwo;
+				break;
+			}
+		}
+
+    scores.sumScores = total * 10;
+    scores.diffScore = scores.sumScores - 40;
+
+    printf("Your marks is %d.\nYou are %d away from failing.\n\n", scores.sumScores, scores.diffScore);
+
+    if(scores.sumScores >= 60){
+        printf("Congrats! You went up a grade!\n Let's keep at it for the next one too!");
+        printf("\n\n");
+        return TRUE;
+    }
+    printf("Oh my... Looks like you gonna have to repeat the year.\nDon't worry!\nLet's get better for the next one!");
+    printf("\n\n");
+
+    return FALSE;
+}
+
+
 
 void updateStatus(t_PlayerStatus *player, int isFlag){
     if(isFlag){
