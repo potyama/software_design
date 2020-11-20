@@ -78,3 +78,7 @@ void finishMessage(){ }
 ](http://www.c-lang.org/detail/naming_conventions.html)と[C Coding Standard
 ](https://users.ece.cmu.edu/~eno/coding/CCodingStandard.html)、[Recommended C Style and Coding Standards
 ](https://www.doc.ic.ac.uk/lab/cplus/cstyle.html)を参考にした
+
+
+# 作成者
+WalkerZC
