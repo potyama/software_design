@@ -33,6 +33,7 @@ void  getWord(char *word) {
         fprintf(stderr,"FATAL:Failed to read the file:%s\n", WORD_FILE);
         exit(1);
     }
+
     fseek(fp,0,SEEK_END);
     dictionaryFileSize = ftell(fp);
     succeedGettingWord = FALSE;
@@ -83,38 +84,43 @@ int levelOne(t_PlayerStatus player){
     int repeat;
     printf("This is level one questions\n");
 
-	if(player.schoolGrade==1) {
-		repeat=10;
-	}
-	else if(player.schoolGrade==2) {
-		repeat=4;
-	}
-	else if(player.schoolGrade==3) {
-		repeat=1;
-	}
+    switch (player.schoolGrade){
+        case 1:
+		    repeat=10;
+            break;
+
+        case 2:
+		    repeat=4;
+            break;
+
+        case 3:
+        	repeat=1;
+            break;
+    }
 
 	for(int i=0; i<repeat; i++){
 		switch (rand()%2){
-        case 0:{
-            a = ((rand() % 10 * player.schoolGrade) + 1);
-            b = ((rand() % 10 * player.schoolGrade) + 1);
+            case 0:{
+                a = ((rand() % 10 * player.schoolGrade) + 1);
+                b = ((rand() % 10 * player.schoolGrade) + 1);
 
-            printf("%d + %d = ?\n", a, b);
-            scanf("%d", &ans);
-            if(a + b == ans)cnt++;
+                printf("%d + %d = ?\n", a, b);
+                scanf("%d", &ans);
+                if(a + b == ans)cnt++;
 
-            break;
+                break;
             }
-        case 1:{
-            a = ((rand() % 10 * player.schoolGrade) + 1);
-            b = ((rand() % 10 * player.schoolGrade) + 1);
 
-            printf("%d - %d = ?\n", a, b);
-            scanf("%d", &ans);
+            case 1:{
+                a = ((rand() % 10 * player.schoolGrade) + 1);
+                b = ((rand() % 10 * player.schoolGrade) + 1);
 
-            if(a - b == ans)cnt++;
+                printf("%d - %d = ?\n", a, b);
+                scanf("%d", &ans);
 
-            break;
+                if(a - b == ans)cnt++;
+
+                break;
             }
         }
 	}
@@ -172,13 +178,13 @@ int levelTwo(t_PlayerStatus player){
     return cnt;
 }
 
-int levelThree(t_PlayerStatus player) {
-    char  word[WORD_LEN];
-    char  answer[WORD_LEN];
-    char  dummy;
-    int   cnt = 0;
-    int   guessed = FALSE;
+int levelThree(t_PlayerStatus player){
+    int cnt = 0;
+    int guessed = FALSE;
     int repeat;
+    char word[WORD_LEN], answer[WORD_LEN];
+    char dummy;
+
 
 
     switch (player.schoolGrade){
@@ -192,6 +198,7 @@ int levelThree(t_PlayerStatus player) {
         repeat=1;
         break;
     }
+    printf("e.g. \nap--e  -> apple\n\nApple -> Apple\n\n");
 	for(int i=0; i<repeat; i++){
         getWord(word);
         showStatus(word);
@@ -280,7 +287,7 @@ void finishMessage(){
 
 
 int main(){
-    t_PlayerStatus player = {1, 0, 1};
+    t_PlayerStatus player = {3, 0, 1};
     t_PlayerScore first = {};
     checkStatus(player);
 
