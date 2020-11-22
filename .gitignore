@@ -1,0 +1,8 @@
+*.xml
+*.exe
+*.out
+*.json
+
+/venv
+/.idea
+/.vscode
