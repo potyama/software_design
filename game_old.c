@@ -5,6 +5,10 @@
 #define TRUE 1
 #define FALSE 0
 
+#define WORD_FILE               "./dict"
+#define WORD_LEN                50
+#define MIN_LETTERS_IN_A_WORD   5
+
 typedef struct {
     int schoolGrade;
     int countRepeatYear;
@@ -24,72 +28,54 @@ void checkStatus(t_PlayerStatus player){
     printf("\n\n");
 }
 
-int levelOne(t_PlayerStatus player){
-	srand((unsigned)time(NULL));
-    int cnt=0;
-    int a,b,ans;
-    int repeat;
-    printf("This is level one questions\n");
 
-	if(player.schoolGrade==1) {
-		repeat=10;
-	}
-	else if(player.schoolGrade==2) {
-		repeat=4;
-	}
-	else if(player.schoolGrade==3) {
-		repeat=1;
-	} 
-	
-	for(int i=0; i<repeat; i++){
-		switch (rand()%2){
-        case 0:{
-            a = ((rand() % 10 * player.schoolGrade) + 1);
-            b = ((rand() % 10 * player.schoolGrade) + 1);
+void  showStatus(char *word)
+{
+    int   count = 0;
 
-            printf("%d + %d = ?\n", a, b);
-            scanf("%d", &ans);
-            if(a + b == ans)cnt++;
-
-            break;
-            }
-        case 1:{
-            a = ((rand() % 10 * player.schoolGrade) + 1);
-            b = ((rand() % 10 * player.schoolGrade) + 1);
-
-            printf("%d - %d = ?\n", a, b);
-            scanf("%d", &ans);
-
-            if(a - b == ans)cnt++;
-
-            break;
-            }
+    printf('\n');
+    while (*word != '\0'){
+        if (count != 2 && count != 3) {
+            printf(*word);
+        }else{
+            printf('-');
         }
-	}
-    printf("level one count is %d\n", cnt);
-    return cnt;
+        count++;
+        word++;
+    }
+    printf('\n');
 }
 
-int levelTwo(t_PlayerStatus player){
-	srand((unsigned)time(NULL));
+int tryExam(t_PlayerScore scores, t_PlayerStatus player){
+    srand((unsigned)time(NULL));
     int cnt=0;
     int a,b,ans;
-    int repeat;
-    printf("This is level two question\n");
+    printf("Let's try!\n\n");
 
-	if(player.schoolGrade==2) {
-		repeat=6;
-	}
-	else if(player.schoolGrade==3){
-		repeat=3;
-	} 
-	else if(player.schoolGrade==4){
-		repeat=1;
-	} 
-	
-	for(int i=0; i<repeat; i++){
-		switch (rand()%2){
-         case 0: {
+    for(int i = 0;i < 10; i++){
+        switch (rand()%4){
+            case 0:{
+                a = ((rand() % 10 * player.schoolGrade) + 1);
+                b = ((rand() % 10 * player.schoolGrade) + 1);
+
+                printf("%d + %d = ?\n", a, b);
+                scanf("%d", &ans);
+                if(a + b == ans)cnt++;
+
+                break;
+                }
+            case 1:{
+                a = ((rand() % 10 * player.schoolGrade) + 1);
+                b = ((rand() % 10 * player.schoolGrade) + 1);
+
+                printf("%d - %d = ?\n", a, b);
+                scanf("%d", &ans);
+
+                if(a - b == ans)cnt++;
+
+                break;
+                }
+            case 2: {
                 a = ((rand() % 10) + 1);
                 b = ((rand() % 10) + 1);
 
@@ -101,7 +87,7 @@ int levelTwo(t_PlayerStatus player){
                 break;
                 }
 
-            case 1:{
+            case 3:{
                 a = ((rand() % 10) + 1);
                 b = ((rand() % 10) + 1);
 		        int c = a * b;
@@ -109,36 +95,11 @@ int levelTwo(t_PlayerStatus player){
                 printf("%d / %d = ?\n", c, a);
                 scanf("%d", &ans);
                 if(b == ans)cnt++;
-                
-                break;
-	        }
+                }
         }
-	}
-    printf("level two count is %d\n", cnt);
-    return cnt;
-}
+    }
 
-int tryExam(t_PlayerScore scores, t_PlayerStatus player){
-    srand((unsigned)time(NULL));
-    int total=0;
-    int a,b,ans;
-    printf("Let's try!\n\n");
-
-    	switch(player.schoolGrade){
-    		case 1:{
-    			int numOne = levelOne(player);
-    			total = numOne;
-				break;
-			}
-			case 2:{
-				int numOne = levelOne(player);
-				int numTwo = levelTwo(player);
-				total = numOne + numTwo;
-				break;
-			}
-		}
-
-    scores.sumScores = total * 10;
+    scores.sumScores = cnt * 10;
     scores.diffScore = scores.sumScores - 40;
 
     printf("Your marks is %d.\nYou are %d away from failing.\n\n", scores.sumScores, scores.diffScore);
@@ -153,8 +114,6 @@ int tryExam(t_PlayerScore scores, t_PlayerStatus player){
 
     return FALSE;
 }
-
-
 
 void updateStatus(t_PlayerStatus *player, int isFlag){
     if(isFlag){
@@ -176,7 +135,7 @@ int main(){
     t_PlayerScore first = {};
     checkStatus(player);
 
-    while(player.schoolGrade < 3){
+    while(player.schoolGrade < 5){
         int isFlag = tryExam(first, player);
         updateStatus(&player, isFlag);
         checkStatus(player);
