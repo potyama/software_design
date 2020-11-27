@@ -99,9 +99,9 @@ int levelOne(t_PlayerStatus player){
 	srand((unsigned)time(NULL));
     int cnt=0;
     int a,b,ans;
-    int repeat;
-    repeat = chooseRepeat(player);
     printf("This is level one questions\n");
+
+    int repeat = chooseRepeat(player);
 
 	for(int i=0; i<repeat; i++){
 		switch (rand()%2){
@@ -137,17 +137,9 @@ int levelTwo(t_PlayerStatus player){
 	srand((unsigned)time(NULL));
     int cnt=0;
     int a,b,ans;
-    int repeat = chooseRepeat(player);
     printf("This is level two question\n");
 
-    switch (player.schoolGrade){
-        case 2:
-            repeat=6;
-            break;
-        case 3:
-            repeat=3;
-            break;
-
+    int repeat = chooseRepeat(player);
 
 	for(int i=0; i<repeat; i++){
 		switch (rand()%2){
@@ -183,9 +175,10 @@ int levelTwo(t_PlayerStatus player){
 int levelThree(t_PlayerStatus player){
     int cnt = 0;
     int guessed = FALSE;
-    int repeat = chooseRepeat(player);
     char word[WORD_LEN], answer[WORD_LEN];
     char dummy;
+
+    int repeat = chooseRepeat(player);
 
     printf("e.g. \nap--e  -> apple\n\nApple -> Apple\n\n");
 	for(int i=0; i<repeat; i++){
