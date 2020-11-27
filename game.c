@@ -9,7 +9,6 @@
 #define WORD_FILE               "./dict"
 #define WORD_LEN                50
 #define MIN_LETTERS_IN_A_WORD   5
-
 typedef struct {
     int schoolGrade;
     int countRepeatYear;
@@ -77,26 +76,32 @@ void showStatus(char *word)
     printf("\n");
 }
 
+int chooseRepeat(t_PlayerStatus player){
+    int repeat;
+    switch (player.schoolGrade){
+        case 1:
+		    repeat=10;
+            break;
+        case 2:
+            repeat=6;
+            break;
+        case 3:
+            repeat=3;
+            break;
+        case 4:
+            repeat=1;
+            break;
+    }
+    return repeat;
+}
+
 int levelOne(t_PlayerStatus player){
 	srand((unsigned)time(NULL));
     int cnt=0;
     int a,b,ans;
     int repeat;
+    repeat = chooseRepeat(player);
     printf("This is level one questions\n");
-
-    switch (player.schoolGrade){
-        case 1:
-		    repeat=10;
-            break;
-
-        case 2:
-		    repeat=4;
-            break;
-
-        case 3:
-        	repeat=1;
-            break;
-    }
 
 	for(int i=0; i<repeat; i++){
 		switch (rand()%2){
@@ -132,7 +137,7 @@ int levelTwo(t_PlayerStatus player){
 	srand((unsigned)time(NULL));
     int cnt=0;
     int a,b,ans;
-    int repeat;
+    int repeat = chooseRepeat(player);
     printf("This is level two question\n");
 
     switch (player.schoolGrade){
@@ -142,10 +147,7 @@ int levelTwo(t_PlayerStatus player){
         case 3:
             repeat=3;
             break;
-        case 4:
-            repeat=1;
-            break;
-    }
+
 
 	for(int i=0; i<repeat; i++){
 		switch (rand()%2){
@@ -181,23 +183,10 @@ int levelTwo(t_PlayerStatus player){
 int levelThree(t_PlayerStatus player){
     int cnt = 0;
     int guessed = FALSE;
-    int repeat;
+    int repeat = chooseRepeat(player);
     char word[WORD_LEN], answer[WORD_LEN];
     char dummy;
 
-
-
-    switch (player.schoolGrade){
-    case 3:
-        repeat=6;
-        break;
-    case 4:
-        repeat=3;
-        break;
-    case 5:
-        repeat=1;
-        break;
-    }
     printf("e.g. \nap--e  -> apple\n\nApple -> Apple\n\n");
 	for(int i=0; i<repeat; i++){
         getWord(word);
@@ -287,7 +276,7 @@ void finishMessage(){
 
 
 int main(){
-    t_PlayerStatus player = {3, 0, 1};
+    t_PlayerStatus player = {1, 0, 1};
     t_PlayerScore first = {};
     checkStatus(player);
 
