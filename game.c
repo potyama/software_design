@@ -80,7 +80,7 @@ int chooseRepeat(t_PlayerStatus player){
     int repeat;
     switch (player.schoolGrade){
         case 1:
-		    repeat=10;
+	        repeat=10;
             break;
         case 2:
             repeat=6;
