@@ -40,7 +40,33 @@ typedef struct {
 
 ゲーム進行において必要な情報が入ってる構造体
 
-## 関数使用
+## 関数仕様
+
+```c=
+void  getWord(char *word)
+```
+単語リストを取得
+
+```c=
+void showStatus(char *word)
+```
+
+ステータスを表示
+
+```c=
+int chooseRepeat(t_PlayerStatus player)
+```
+
+問題数を計算
+
+```c=
+int levelOne(t_PlayerStatus player)
+int levelTwo(t_PlayerStatus player)
+int levelThree(t_PlayerStatus player)
+```
+
+難易度ごとの問題の出題
+
 ```c=
 void checkStatus(t_PlayerStatus player){ }
 ```
