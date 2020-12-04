@@ -6,6 +6,7 @@
 #define TRUE 1
 #define FALSE 0
 
+
 #define WORD_FILE               "./dict"
 #define WORD_LEN                50
 #define MIN_LETTERS_IN_A_WORD   5
@@ -14,6 +15,7 @@ typedef struct {
     int schoolGrade;
     int countRepeatYear;
     int myTurn;
+    int myGakka;
 } t_PlayerStatus;
 
 typedef struct {
@@ -56,6 +58,22 @@ void  getWord(char *word) {
 void checkStatus(t_PlayerStatus player){
     printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
     printf("You're currently a %d year student.\nYou repeated your grade %d time(s). This is your %d time(s).\n", player.schoolGrade, player.countRepeatYear, player.myTurn);
+    
+    if(player.myGakka==1){
+        printf("You are mechanical engineering student");
+    }
+    else if(player.myGakka==2){
+        printf("You are electrical engineering student");
+    }
+    else if(player.myGakka==3){
+        printf("You are electrical control engineering student");
+    }
+    else if(player.myGakka==4){
+        printf("You are information and computer engineering student");
+    }
+    else if(player.myGakka==5){
+        printf("You are civil engineering student");
+    }
     printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
     printf("\n\n");
 }
@@ -289,6 +307,12 @@ void finishMessage(){
 int main(){
     t_PlayerStatus player = {3, 0, 1};
     t_PlayerScore first = {};
+    int gakka;
+    printf("Select Your Gakka : \n");
+    printf("1:Mechanical 2:Electrical 3:Control 4:Information 5:Civil \n");
+    scanf("%d", &gakka);
+
+    t_PlayerStatus player.myGakka = gakka;
     checkStatus(player);
 
     while(player.schoolGrade < 4){
