@@ -93,6 +93,66 @@ void finishMessage(){ }
 
 終わりのメッセージを表示する。
 
+## 基本関数のリスト ※関数仕様とほぼ同じ箇所多々あり
+
+```c=
+void  getWord(char *word)
+```
+単語ファイルを読み込み、ランダムで最短文字数以上の単語をwordに代入する
+
+```c=
+void checkStatus(t_PlayerStatus player)
+```
+プレイヤーの情報(学年、留年回数、ターン数)を表示する
+
+```c=
+void showStatus(char *word)
+```
+単語問題の状態を表示する。ここでは2,3文字目を隠す。
+
+```c=
+int chooseRepeat(t_PlayerStatus player);
+```
+返り値 repeat
+程よい回数繰り返すための数字をrepeatに返す。
+
+```c=
+int levelOne(t_PlayerStatus player)
+```
+返り値 cnt 
+ランダムに加算または減算の問題を出題し、
+正解数をカウントしcntに返す。
+
+```c=
+int levelTwo(t_PlayerStatus player)
+```
+返り値 cnt
+ランダムに乗算または除算の問題を出題し、
+正解数をカウントしcntに返す。
+
+```c=
+int levelThree(t_PlayerStatus player)
+```
+返り値 cnt
+ランダムに英単語の虫食い問題を出題し、
+正解数をカウントしcntに返す。
+
+```c=
+int tryExam(t_PlayerScore scores, t_PlayerStatus player)
+```
+学年に応じて出題する問題を切り替え出題し、
+採点、進級の可否を表示する。
+
+```c=
+void updateStatus(t_PlayStatus *player, int isFlag)
+```
+問題の正答率に応じて学年または留年回数の追加とターン数を増やす。
+
+```c=
+void finishMessage();
+```
+終了メッセージを表示する。
+
 # テスト
 ## 単体テスト
 ## 結合テスト
