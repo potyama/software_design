@@ -1,48 +1,130 @@
 #include <stdio.h>
+#include <string.h>
 #include <time.h>
 #include <stdlib.h>
 
 #define TRUE 1
 #define FALSE 0
 
-typedef struct {
-    int school_grade;
-    int count_repeat_year;
-    int turn;
-} board;
+#define WORD_FILE               "./dict"
+#define WORD_LEN                50
+#define MIN_LETTERS_IN_A_WORD   5
 
 typedef struct {
-    int sum_points;
-    int diff_point;
-} grade;
+    int schoolGrade;
+    int countRepeatYear;
+    int myTurn;
+} t_PlayerStatus;
+
+typedef struct {
+    int sumScores;
+    int diffScore;
+} t_PlayerScore;
 
 
-void checkGrade(board person){
-    printf("Your grade is %d,\nThe number of years of retention is %d,\nYour turn is %d.\n", person.school_grade, person.count_repeat_year, person.turn);
-    printf("\n\n");
+void getWord(char *word){
+    int wordLength;
+    int succeedGettingWord;
+    long dictionaryFileSize;
+    long pos;
+    FILE *fp;
+
+    if ((fp = fopen(WORD_FILE, "r")) == NULL) {
+        fprintf(stderr,"FATAL:Failed to read the file:%s\n", WORD_FILE);
+        exit(1);
+    }
+
+    fseek(fp,0,SEEK_END);
+    dictionaryFileSize = ftell(fp);
+    succeedGettingWord = FALSE;
+    while (!succeedGettingWord) {
+        pos = rand()%dictionaryFileSize;
+        fseek(fp, pos, SEEK_SET);
+        fgets(word, WORD_LEN, fp);
+        if (fgets(word, WORD_LEN, fp) != NULL) {
+            wordLength = strlen(word) - 1;
+            word[wordLength] = '\0';
+            if (wordLength >= MIN_LETTERS_IN_A_WORD){
+                succeedGettingWord = TRUE;
+            }
+        }
+    }
+    fclose(fp);
 }
 
-int shouldPromotion(grade add_point, board player){
-    srand((unsigned)time(NULL));
-    int cnt=0;
-    int a,b,loop_i,ans;
 
-    for(int i = 0;i < 10; i++){
-        loop_i = 0;
-        switch (rand()%4){
+void checkStatus(t_PlayerStatus player){
+    printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+    printf("You're currently a %d year student.\nYou repeated your grade %d time(s). This is your %d time(s).\n", player.schoolGrade, player.countRepeatYear, player.myTurn);
+    printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+    printf("\n\n");
+
+    if(player.schoolGrade == 5){
+        printf("Good Bye:)\n");
+    }
+
+}
+
+void showStatus(char *word)
+{
+    int   count = 0;
+
+    printf("\n");
+    while (*word != '\0'){
+        if (count != 2 && count != 3) {
+            printf("%c", *word);
+        }else{
+            printf("-");
+        }
+        count++;
+        word++;
+    }
+    printf("\n");
+}
+
+int chooseRepeat(t_PlayerStatus player){
+    int repeat;
+    switch (player.schoolGrade){
+        case 1:
+	        repeat=10;
+            break;
+        case 2:
+            repeat=6;
+            break;
+        case 3:
+            repeat=3;
+            break;
+        case 4:
+            repeat=1;
+            break;
+    }
+    return repeat;
+}
+
+int levelOne(t_PlayerStatus player){
+	srand((unsigned)time(NULL));
+    int cnt=0;
+    int a,b,ans;
+    printf("This is level one questions\n");
+
+    int repeat = chooseRepeat(player);
+
+	for(int i=0; i<repeat; i++){
+		switch (rand()%2){
             case 0:{
-                a = ((rand() % 10 * player.school_grade) + 1);
-                b = ((rand() % 10 * player.school_grade) + 1);
+                a = ((rand() % 10 * player.schoolGrade) + 1);
+                b = ((rand() % 10 * player.schoolGrade) + 1);
 
                 printf("%d + %d = ?\n", a, b);
                 scanf("%d", &ans);
                 if(a + b == ans)cnt++;
 
                 break;
-                }
+            }
+
             case 1:{
-                a = ((rand() % 10 * player.school_grade) + 1);
-                b = ((rand() % 10 * player.school_grade) + 1);
+                a = ((rand() % 10 * player.schoolGrade) + 1);
+                b = ((rand() % 10 * player.schoolGrade) + 1);
 
                 printf("%d - %d = ?\n", a, b);
                 scanf("%d", &ans);
@@ -50,8 +132,24 @@ int shouldPromotion(grade add_point, board player){
                 if(a - b == ans)cnt++;
 
                 break;
-                }
-            case 2: {
+            }
+        }
+	}
+    printf("level one count is %d\n", cnt);
+    return cnt;
+}
+
+int levelTwo(t_PlayerStatus player){
+	srand((unsigned)time(NULL));
+    int cnt=0;
+    int a,b,ans;
+    printf("This is level two question\n");
+
+    int repeat = chooseRepeat(player);
+
+	for(int i=0; i<repeat; i++){
+		switch (rand()%2){
+            case 0: {
                 a = ((rand() % 10) + 1);
                 b = ((rand() % 10) + 1);
 
@@ -63,60 +161,125 @@ int shouldPromotion(grade add_point, board player){
                 break;
                 }
 
-            case 3:
-            do{
-                a = ((rand() % 10) * player.school_grade + 1);
-                b = ((rand() % 10) * player.school_grade + 2);
-                printf("a=%d,b=%d, i=%d\n",a,b,i);
-                loop_i++;
-            }while(a%b != 0 && loop_i <= 10);
+            case 1:{
+                a = ((rand() % 10) + 1);
+                b = ((rand() % 10) + 1);
+		        int c = a * b;
 
-                printf("%d / %d = ?\n", a, b);
+                printf("%d / %d = ?\n", c, a);
                 scanf("%d", &ans);
-                if(a / b == ans)cnt++;
+                if(b == ans)cnt++;
 
-            break;
+                break;
+            }
+        }
+	}
+    printf("level two count is %d\n", cnt);
+    return cnt;
+}
+
+int levelThree(t_PlayerStatus player){
+    int cnt = 0;
+    int guessed = FALSE;
+    char word[WORD_LEN], answer[WORD_LEN];
+    char dummy;
+
+    int repeat = chooseRepeat(player);
+
+    printf("e.g. \nap--e  -> apple\n\nAp--e -> Apple\n\n");
+	for(int i=0; i<repeat; i++){
+        getWord(word);
+        showStatus(word);
+        scanf("%s%c", answer, &dummy);
+
+        while (word[cnt] != '\0') {
+            if (answer[cnt] != word[cnt]) {
+                guessed = FALSE;
+                break;
+            }else{
+                guessed = TRUE;
+            }
+            cnt++;
+        }
+        printf("\n");
+        if (guessed){
+            printf("Correct! nice :)\n '%s'\n",word);
+        }else{
+            printf("What a pity... :( The correct answer is '%s'\n",word);
         }
     }
+    printf("level three count is %d\n", cnt);
 
-    add_point.sum_points = cnt * 10;
-    add_point.diff_point = add_point.sum_points - 40;
+    return cnt;
+}
 
-    if(add_point.sum_points >= 60){
-        printf("Your test score was %d. Difference is %d points.\nCongratulations. You've been promoted.\n", add_point.sum_points, add_point.diff_point);
+int tryExam(t_PlayerScore scores, t_PlayerStatus player){
+    srand((unsigned)time(NULL));
+    int total=0;
+    int a,b,ans;
+    printf("Let's try!\n\n");
+
+    switch(player.schoolGrade){
+        case 1:{
+            int numOne = levelOne(player);
+            total = numOne;
+			break;
+		}
+		case 2:{
+			int numOne = levelOne(player);
+            int numTwo = levelTwo(player);
+            total = numOne + numTwo;
+            break;
+        }
+        case 3:{
+            int numOne = levelOne(player);
+            int numTwo = levelTwo(player);
+            int numThree = levelThree(player);
+            total = numOne + numTwo + numThree;
+            break;
+        }
+        default:{
+            total = 10;
+        }
+	}
+
+    scores.sumScores = total * 10;
+    scores.diffScore = scores.sumScores - 40;
+
+    printf("Your marks is %d.\nYou are %d away from failing.\n\n", scores.sumScores, scores.diffScore);
+
+    if(scores.sumScores >= 60){
+        printf("Congrats! You went up a grade!\n Let's keep at it for the next one too!");
         printf("\n\n");
         return TRUE;
     }
-    printf("Your test score was %d. Difference is %d points.\nOops. You repeated a school year...   Cheer up! Work harder next time.\n", add_point.sum_points, add_point.diff_point);
+    printf("Oh my... Looks like you gonna have to repeat the year.\nDon't worry!\nLet's get better for the next one!");
     printf("\n\n");
 
     return FALSE;
+
 }
 
-void updateGrade(board *main_character, int isFlag){
+
+void updateStatus(t_PlayerStatus *player, int isFlag){
     if(isFlag){
-        main_character->school_grade++;
-        main_character->turn++;
+        player->schoolGrade++;
+        player->myTurn++;
     }else{
-        main_character->count_repeat_year++;
-        main_character->turn++;
+        player->countRepeatYear++;
+        player->myTurn++;
     }
-}
-
-void message(){
-    printf("Good Bye:)\n");
 }
 
 
 int main(){
-    board player = {1, 0, 1};
-    grade first = {};
-    checkGrade(player);
+    t_PlayerStatus player = {4, 0, 1};
+    t_PlayerScore first = {};
+    checkStatus(player);
 
-    while(player.school_grade < 5){
-        int isFlag = shouldPromotion(first, player);
-        updateGrade(&player, isFlag);
-        checkGrade(player);
+    while(player.schoolGrade < 5){
+        int isFlag = tryExam(first, player);
+        updateStatus(&player, isFlag);
+        checkStatus(player);
     }
-    message();
 }
