@@ -6,11 +6,11 @@
 #define TRUE 1
 #define FALSE 0
 
-#define Mechanical 1+100
-#define Electrical 2+100
-#define Denshi 3+100
-#define Jouhou 4+100
-#define Civil 5+100
+#define Mecha 101
+#define Elect 102
+#define Denshi 103
+#define Jouhou 104
+#define Civil 105
 
 #define WORD_FILE               "./dict"
 #define WORD_LEN                50
