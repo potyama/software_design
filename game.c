@@ -6,6 +6,12 @@
 #define TRUE 1
 #define FALSE 0
 
+#define Mecha 101
+#define Elect 102
+#define Denshi 103
+#define Jouhou 104
+#define Civil 105
+
 #define WORD_FILE               "./dict"
 #define WORD_LEN                50
 #define MIN_LETTERS_IN_A_WORD   5
@@ -282,4 +288,5 @@ int main(){
         updateStatus(&player, isFlag);
         checkStatus(player);
     }
+
 }
