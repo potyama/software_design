@@ -6,6 +6,12 @@
 #define TRUE 1
 #define FALSE 0
 
+#define Mechanical 1+100
+#define Electrical 2+100
+#define Denshi 3+100
+#define Jouhou 4+100
+#define Civil 5+100
+
 #define WORD_FILE               "./dict"
 #define WORD_LEN                50
 #define MIN_LETTERS_IN_A_WORD   5
