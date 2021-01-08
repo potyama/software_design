@@ -9,6 +9,7 @@
 #define WORD_FILE               "./dict"
 #define WORD_LEN                50
 #define MIN_LETTERS_IN_A_WORD   5
+
 typedef struct {
     int schoolGrade;
     int countRepeatYear;
@@ -21,7 +22,7 @@ typedef struct {
 } t_PlayerScore;
 
 
-void  getWord(char *word) {
+void getWord(char *word){
     int wordLength;
     int succeedGettingWord;
     long dictionaryFileSize;
@@ -57,6 +58,11 @@ void checkStatus(t_PlayerStatus player){
     printf("You're currently a %d year student.\nYou repeated your grade %d time(s). This is your %d time(s).\n", player.schoolGrade, player.countRepeatYear, player.myTurn);
     printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
     printf("\n\n");
+
+    if(player.schoolGrade == 5){
+        printf("Good Bye:)\n");
+    }
+
 }
 
 void showStatus(char *word)
@@ -180,7 +186,7 @@ int levelThree(t_PlayerStatus player){
 
     int repeat = chooseRepeat(player);
 
-    printf("e.g. \nap--e  -> apple\n\nApple -> Apple\n\n");
+    printf("e.g. \nap--e  -> apple\n\nAp--e -> Apple\n\n");
 	for(int i=0; i<repeat; i++){
         getWord(word);
         showStatus(word);
@@ -232,6 +238,9 @@ int tryExam(t_PlayerScore scores, t_PlayerStatus player){
             total = numOne + numTwo + numThree;
             break;
         }
+        default:{
+            total = 10;
+        }
 	}
 
     scores.sumScores = total * 10;
@@ -252,7 +261,6 @@ int tryExam(t_PlayerScore scores, t_PlayerStatus player){
 }
 
 
-
 void updateStatus(t_PlayerStatus *player, int isFlag){
     if(isFlag){
         player->schoolGrade++;
@@ -263,20 +271,15 @@ void updateStatus(t_PlayerStatus *player, int isFlag){
     }
 }
 
-void finishMessage(){
-    printf("Good Bye:)\n");
-}
-
 
 int main(){
-    t_PlayerStatus player = {1, 0, 1};
+    t_PlayerStatus player = {4, 0, 1};
     t_PlayerScore first = {};
     checkStatus(player);
 
-    while(player.schoolGrade < 4){
+    while(player.schoolGrade < 5){
         int isFlag = tryExam(first, player);
         updateStatus(&player, isFlag);
         checkStatus(player);
     }
-    finishMessage();
 }
