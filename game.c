@@ -225,6 +225,199 @@ int levelThree(t_PlayerStatus player){
     return cnt;
 }
 
+int levelFour(t_PlayerStatus player){
+    int length, height,area, question,ans,repeat;
+	int upper_len, lower_len;
+	srand((unsigned)time(NULL));
+	//case 1 is rectangle, 2 is triangle, 3 is trapezium
+	int cnt = 0;
+    printf("This is level four question\n");
+
+    switch (player.schoolGrade){
+    case 4:
+        repeat=6;
+        break;
+    case 5:
+        repeat=4;
+        break;
+    }
+
+	for(int i = 0; i < repeat; i++){
+		switch(rand()%3){
+		case 0:{
+				length = rand()%15+10;
+				if(length%2==0){
+					height = rand()%15+10;
+					area = length * height;
+					printf("Rectangle Length = %d, Height = %d\n", length,height);
+                    scanf("%d", &ans);
+					if(area == ans)cnt++;
+                    
+					break;
+				}
+				else{
+					length += 1;
+					height = rand()%15+10;
+					area = length * height;
+					printf("Rectangle Length = %d, Height = %d\n", length,height);
+                    scanf("%d", &ans);
+					if(area == ans)cnt++;
+
+					break;
+				}
+				break;
+			}
+		
+		case 1:{
+				length = rand()%15+10;
+				if(length%2==0){
+					height = rand()%15+10;
+					area = 0.5 * length * height;
+					printf("Triangle Length = %d, Height = %d\n", length,height);
+                    scanf("%d", &ans);
+					if(area == ans)cnt++;
+                    
+					break;
+				}
+				else{
+					length += 1;
+					height = rand()%15+10;
+					area = 0.5 * length * height;
+					printf("Triangle Length = %d, Height = %d\n", length,height);
+                    scanf("%d", &ans);
+					if(area == ans)cnt++;
+                    
+					break;
+				}
+				break;
+			}
+			
+		case 2:{
+				height = rand()%15+10;
+				if(height%2==0){
+					upper_len = rand()%15+10;
+					lower_len = rand()%10+5;
+					area = (0.5 * lower_len * height) + (upper_len * height);
+					printf("Trapezium Upper Length = %d, Lower Length = %d, Height = %d\n", upper_len, (lower_len + upper_len), height);
+                    scanf("%d", &ans);
+					if(area == ans)cnt++;
+                    
+					break;
+				}
+				else{
+					height += 1;
+					upper_len = rand()%15+10;
+					lower_len = rand()%10+5;
+					area = (0.5 * lower_len * height) + (upper_len * height);
+					printf("Trapezium Upper Length = %d, Lower Length = %d, Height = %d\n", upper_len, (lower_len + upper_len), height);
+                    scanf("%d", &ans);
+					if(area == ans)cnt++;
+                    
+					break;
+				}	
+                
+				break;
+			}
+
+		}
+	}
+    printf("Level Four count is %d\n", cnt);
+    return cnt;
+}
+
+int levelFive(t_PlayerStatus player){
+    int length,height,width,volume, question,ans,repeat;
+	srand((unsigned)time(NULL));
+	//case 1 is rectangle, 2 is triangle, 3 is trapezium
+	int cnt = 0;
+    printf("This is level five question\n");
+
+    switch (player.schoolGrade){
+    case 5:{
+        repeat=6;
+        break;
+    }
+    }
+
+	for(int i = 0; i < repeat; i++){
+		switch(rand()%3){
+        case 0:{
+				length = rand()%15+6;
+				if(length%2==0){
+					volume = length * length * length;
+					printf("Cube Length = %d\n", length);
+					scanf("%d", &ans);
+					if(volume == ans)cnt++;
+
+					break;
+				}
+				else{
+					length += 1;
+					volume = length * length * length;
+					printf("Cube Length = %d\n", length);
+					scanf("%d", &ans);
+					if(volume == ans)cnt++;
+
+					break;
+				}
+				break;
+			}
+		
+		case 1:{
+				length = rand()%15+6;
+				if(length%2==0){
+					height = rand()%15+10;
+					volume =length * length * height;
+					printf("Cuboid Length = %d, Height = %d\n", length,height);
+					scanf("%d", &ans);
+					if(volume == ans)cnt++;
+
+					break;
+				}
+				else{
+					length += 1;
+					height = rand()%15+6;
+					volume = length * length * height;
+					printf("Cuboid Length = %d, Height = %d\n", length,height);
+					scanf("%d", &ans);
+					if(volume == ans)cnt++;
+
+					break;
+				}
+				break;
+			}
+			
+		case 2:{
+				height = rand()%15+6;
+				if(height%3==0){
+					length = rand()%15+10;
+					volume = (height * length * length)/3;
+					printf("Pyramid Base Length = %d, Height = %d\n", length, height);
+					scanf("%d", &ans);
+					if(volume == ans)cnt++;
+
+					break;
+				}
+				else{
+					height *= 3;
+					length = rand()%15+6;
+					volume = (height * length * length)/3;
+					printf("Pyramid Base Length = %d, Height = %d\n", length, height);
+					scanf("%d", &ans);
+					if(volume == ans)cnt++;
+
+					break;
+				}	
+				break;
+			}
+
+		}
+	}
+    printf("Level Five count is %d\n", cnt);
+    return cnt;
+}
+
+
 int tryExam(t_PlayerScore scores, t_PlayerStatus player){
     srand((unsigned)time(NULL));
     int total=0;
@@ -248,6 +441,20 @@ int tryExam(t_PlayerScore scores, t_PlayerStatus player){
             int numTwo = levelTwo(player);
             int numThree = levelThree(player);
             total = numOne + numTwo + numThree;
+            break;
+        }
+        case 4:{
+            int numTwo = levelTwo(player);
+            int numThree = levelThree(player);
+            int numFour = levelFour(player);
+            total = numTwo + numThree + numFour;
+            break;
+        }
+        case 5:{
+            int numThree = levelThree(player);
+            int numFour = levelFour(player);
+            int numFive = levelFive(player);
+            total = numThree + numFour + numFive;
             break;
         }
 	}
@@ -283,72 +490,6 @@ void updateStatus(t_PlayerStatus *player, int isFlag){
 
 void finishMessage(){
     printf("Good Bye:)\n");
-}
-
-void areaQuestion(){
-    int length, height,area, question,cnt;
-	int upper_len, lower_len;
-	
-	//case 1 is square, 2 is triangle, 3 is trapezium
-	
-	while(cnt!=3){
-		switch(rand()%3){
-            case 0:
-                length = rand()%15+10;
-                if(length%2==0){
-                    height = rand()%15+10;
-                    area = length * height;
-                    printf("Square Length = %d, Height = %d, Area = %d\n", length,height,area);
-                    cnt++;
-                    break;
-                }
-                else{
-                    length += 1;
-                    height = rand()%15+10;
-                    area = length * height;
-                    printf("Square Length = %d, Height = %d, Area = %d\n", length,height,area);
-                    cnt++;
-                    break;
-                }
-            
-            case 1:
-                length = rand()%15+10;
-                if(length%2==0){
-                    height = rand()%15+10;
-                    area = 0.5 * length * height;
-                    printf("Triangle Length = %d, Height = %d, Area = %d\n", length,height,area);
-                    cnt++;
-                    break;
-                }
-                else{
-                    length += 1;
-                    height = rand()%15+10;
-                    area = 0.5 * length * height;
-                    printf("Triangle Length = %d, Height = %d, Area = %d\n", length,height,area);
-                    cnt++;
-                    break;
-                }
-            case 2:
-                height = rand()%15+10;
-                if(height%2==0){
-                    upper_len = rand()%15+10;
-                    lower_len = rand()%10+5;
-                    area = (0.5 * lower_len * height) + (upper_len * height);
-                    printf("Trapezium Upper Length = %d, Lower Length = %d, Height = %d, Area = %d\n", upper_len, (lower_len + upper_len), height, area);
-                    cnt++;
-                    break;
-                }
-                else{
-                    height += 1;
-                    upper_len = rand()%15+10;
-                    lower_len = rand()%10+5;
-                    area = (0.5 * lower_len * height) + (upper_len * height);
-                    printf("Trapezium Upper Length = %d, Lower Length = %d, Height = %d, Area = %d\n", upper_len, (lower_len + upper_len), height, area);
-                    cnt++;
-                    break;
-                }	
-	    }
-	}
 }
 
 
