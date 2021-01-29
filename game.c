@@ -326,13 +326,8 @@ int levelFive(t_PlayerStatus player){
 	int cnt = 0;
     printf("This is level five question\n");
 
-    switch (player.schoolGrade){
-    case 5:{
-        repeat=6;
-        break;
-    }
-    }
-
+    repeat = 5;
+    
 	for(int i = 0; i < repeat; i++){
 		switch(rand()%3){
         case 0:{
