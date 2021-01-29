@@ -6,6 +6,12 @@
 #define TRUE 1
 #define FALSE 0
 
+#define Mecha 101
+#define Elect 102
+#define Denshi 103
+#define Jouhou 104
+#define Civil 105
+
 #define WORD_FILE               "./dict"
 #define WORD_LEN                50
 #define MIN_LETTERS_IN_A_WORD   5
@@ -22,7 +28,7 @@ typedef struct {
 } t_PlayerScore;
 
 
-void  getWord(char *word) {
+void getWord(char *word){
     int wordLength;
     int succeedGettingWord;
     long dictionaryFileSize;
@@ -58,6 +64,11 @@ void checkStatus(t_PlayerStatus player){
     printf("You're currently a %d year student.\nYou repeated your grade %d time(s). This is your %d time(s).\n", player.schoolGrade, player.countRepeatYear, player.myTurn);
     printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
     printf("\n\n");
+
+    if(player.schoolGrade == 5){
+        printf("Good Bye:)\n");
+    }
+
 }
 
 void showStatus(char *word)
@@ -77,26 +88,32 @@ void showStatus(char *word)
     printf("\n");
 }
 
+int chooseRepeat(t_PlayerStatus player){
+    int repeat;
+    switch (player.schoolGrade){
+        case 1:
+	        repeat=10;
+            break;
+        case 2:
+            repeat=6;
+            break;
+        case 3:
+            repeat=3;
+            break;
+        case 4:
+            repeat=1;
+            break;
+    }
+    return repeat;
+}
+
 int levelOne(t_PlayerStatus player){
 	srand((unsigned)time(NULL));
     int cnt=0;
     int a,b,ans;
-    int repeat;
     printf("This is level one questions\n");
 
-    switch (player.schoolGrade){
-        case 1:
-		    repeat=10;
-            break;
-
-        case 2:
-		    repeat=4;
-            break;
-
-        case 3:
-        	repeat=1;
-            break;
-    }
+    int repeat = chooseRepeat(player);
 
 	for(int i=0; i<repeat; i++){
 		switch (rand()%2){
@@ -132,20 +149,9 @@ int levelTwo(t_PlayerStatus player){
 	srand((unsigned)time(NULL));
     int cnt=0;
     int a,b,ans;
-    int repeat;
     printf("This is level two question\n");
 
-    switch (player.schoolGrade){
-        case 2:
-            repeat=6;
-            break;
-        case 3:
-            repeat=3;
-            break;
-        case 4:
-            repeat=1;
-            break;
-    }
+    int repeat = chooseRepeat(player);
 
 	for(int i=0; i<repeat; i++){
 		switch (rand()%2){
@@ -181,24 +187,12 @@ int levelTwo(t_PlayerStatus player){
 int levelThree(t_PlayerStatus player){
     int cnt = 0;
     int guessed = FALSE;
-    int repeat;
     char word[WORD_LEN], answer[WORD_LEN];
     char dummy;
 
+    int repeat = chooseRepeat(player);
 
-
-    switch (player.schoolGrade){
-    case 3:
-        repeat=6;
-        break;
-    case 4:
-        repeat=3;
-        break;
-    case 5:
-        repeat=1;
-        break;
-    }
-    printf("e.g. \nap--e  -> apple\n\nApple -> Apple\n\n");
+    printf("e.g. \nap--e  -> apple\n\nAp--e -> Apple\n\n");
 	for(int i=0; i<repeat; i++){
         getWord(word);
         showStatus(word);
@@ -477,7 +471,6 @@ int tryExam(t_PlayerScore scores, t_PlayerStatus player){
 }
 
 
-
 void updateStatus(t_PlayerStatus *player, int isFlag){
     if(isFlag){
         player->schoolGrade++;
@@ -488,20 +481,16 @@ void updateStatus(t_PlayerStatus *player, int isFlag){
     }
 }
 
-void finishMessage(){
-    printf("Good Bye:)\n");
-}
-
 
 int main(){
-    t_PlayerStatus player = {3, 0, 1};
+    t_PlayerStatus player = {4, 0, 1};
     t_PlayerScore first = {};
     checkStatus(player);
 
-    while(player.schoolGrade < 4){
+    while(player.schoolGrade < 5){
         int isFlag = tryExam(first, player);
         updateStatus(&player, isFlag);
         checkStatus(player);
     }
-    finishMessage();
+
 }
